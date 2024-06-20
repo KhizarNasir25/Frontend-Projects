@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Bar with Suggestions</title>
+  <style>
+    #search-container {
+      position: relative;
+      width: 300px;
+      margin: 20px auto;
+    }
+
+    #search-input {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    #suggestions-container {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+      z-index: 1;
+    }
+
+    .suggestion {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .suggestion:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+
+<div id="search-container">
+  <input type="text" id="search-input" placeholder="Type to search">
+  <div id="suggestions-container"></div>
+</div>
+
+<script>
+  const searchInput = document.getElementById('search-input');
+  const suggestionsContainer = document.getElementById('suggestions-container');
+
+  const suggestions = ['JavaScript', 'HTML', 'CSS', 'React', 'Node.js', 'Python', 'Java', 'C++', 'Ruby', 'Angular'];
+
+  // Function to update suggestions based on input
+  function updateSuggestions() {
+    const inputValue = searchInput.value.toLowerCase();
+    const filteredSuggestions = suggestions.filter(suggestion => suggestion.toLowerCase().includes(inputValue));
+
+    // Clear previous suggestions
+    suggestionsContainer.innerHTML = '';
+
+    // Display new suggestions
+    filteredSuggestions.forEach(suggestion => {
+      const suggestionElement = document.createElement('div');
+      suggestionElement.classList.add('suggestion');
+      suggestionElement.textContent = suggestion;
+
+      // Handle suggestion click
+      suggestionElement.addEventListener('click', () => {
+        searchInput.value = suggestion;
+        suggestionsContainer.style.display = 'none';
+      });
+
+      suggestionsContainer.appendChild(suggestionElement);
+    });
+
+    // Show/hide suggestions container based on input
+    suggestionsContainer.style.display = filteredSuggestions.length > 0 ? 'block' : 'none';
+  }
+
+  // Event listener for input changes
+  searchInput.addEventListener('input', updateSuggestions);
+
+  // Close suggestions when clicking outside the search container
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('#search-container')) {
+      suggestionsContainer.style.display = 'none';
+    }
+  });
+</script>
+
+</body>
+</html>
+
+</body>
+</html>
